@@ -1,0 +1,17 @@
+{
+  "name": "tabvault",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "TabVault — smart tab groups, bookmark manager, tab library, duplicate finder and customizable themes. Chrome MV3 extension, local-first, zero runtime dependencies.",
+  "scripts": {
+    "icons": "node tools/make-icons.mjs",
+    "check": "node tools/check.mjs",
+    "selftest": "node --test \"test/*.test.mjs\"",
+    "simulate": "node tools/simulate.mjs",
+    "verify": "npm run check && npm run selftest && npm run simulate"
+  },
+  "engines": {
+    "node": ">=18.17"
+  }
+}

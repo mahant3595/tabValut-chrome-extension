@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" data-theme="dark-neon">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TabVault</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="tv-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>TabVault</span>
+      </div>
+      <button id="open-dashboard" class="ghost" title="Open the full TabVault dashboard">Dashboard</button>
+    </header>
+
+    <section class="tab-card" id="tab-card">
+      <div class="tab-head">
+        <img id="tab-favicon" class="favicon" alt="" />
+        <div class="tab-title-wrap">
+          <div id="tab-title" class="tab-title">Current tab</div>
+          <div id="tab-meta" class="tab-meta"></div>
+        </div>
+      </div>
+      <div class="tab-reasons" id="tab-reasons"></div>
+
+      <div class="btn-row">
+        <button id="btn-group" class="primary" title="Put this tab into a Chrome tab group">Group</button>
+        <button id="btn-bookmark" class="primary" title="Save this tab as a bookmark (never closes it)">Bookmark</button>
+        <button id="btn-collection" class="primary" title="Save this tab into a TabVault collection">Save…</button>
+      </div>
+
+      <div class="collection-picker hidden" id="collection-picker">
+        <select id="collection-select"></select>
+        <button id="collection-new" class="ghost" title="Create a new collection">＋ New</button>
+        <button id="collection-save" class="primary">Save</button>
+      </div>
+    </section>
+
+    <section class="bulk-row">
+      <div class="btn-row" style="margin-bottom: 0">
+        <button id="btn-save-many" class="ghost" style="flex: 1" title="Select many open tabs and save them at once">Save many…</button>
+        <button id="btn-vault" class="ghost" style="flex: 1" title="Browse vault groups & collections without saving history">Vault Browser</button>
+      </div>
+    </section>
+
+    <footer class="tv-footer">
+      <span id="vault-note">Saving never closes your tabs. Unloading is handled by Chrome or your own unloader extension.</span>
+    </footer>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

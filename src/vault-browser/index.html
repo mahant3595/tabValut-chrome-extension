@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vault Browser</title>
+    <link rel="stylesheet" href="vault-browser.css" />
+  </head>
+  <body>
+    <header class="vb-head">
+      <div class="vb-brand"><span class="vb-mark" aria-hidden="true"></span><span id="vb-title">Vault</span></div>
+      <div class="vb-head-actions">
+        <span id="vb-count" class="muted"></span>
+        <span class="vb-badge" title="History-free: nothing is written to browser history from this window">history-free</span>
+      </div>
+    </header>
+    <div class="vb-body">
+      <aside class="vb-side">
+        <div class="vb-side-head">
+          <input id="vb-search" type="search" placeholder="Filter tabs…" />
+          <button id="vb-open-all" class="small" title="Open every stored tab in history-free tabs">Open all</button>
+        </div>
+        <div class="vb-scroll">
+          <div id="vb-session-wrap" class="hidden">
+            <div class="vb-group-head">Session <span id="vb-session-count" class="muted"></span></div>
+            <div id="vb-session" class="vb-list"></div>
+          </div>
+          <div id="vb-stored-head" class="vb-group-head">Stored</div>
+          <div id="vb-list" class="vb-list"></div>
+        </div>
+      </aside>
+      <section class="vb-main">
+        <div class="vb-toolbar vb-addr">
+          <button id="vb-back" class="small icon" title="Back" disabled>‹</button>
+          <button id="vb-fwd" class="small icon" title="Forward" disabled>›</button>
+          <button id="vb-reload" class="small icon" title="Reload">↻</button>
+          <input id="vb-url" spellcheck="false" autocomplete="off" placeholder="Enter a URL and press Enter — it opens inside this window" />
+          <button id="vb-go" class="small primary">Go</button>
+        </div>
+        <div class="vb-toolbar">
+          <button id="vb-open" class="small primary" title="Open the selected site in a real tab without writing browser history">Open (no history)</button>
+          <button id="vb-lazy" class="small" title="Open everything as a real vault window: only the first tab loads, the rest load when you enter them">Open as vault window</button>
+        </div>
+        <div class="vb-frame-wrap">
+          <iframe id="vb-frame" referrerpolicy="no-referrer" title="Vault page viewer"></iframe>
+          <div id="vb-loading" class="vb-loading hidden" aria-live="polite">
+            <span class="vb-spinner" aria-hidden="true"></span>
+            <span>Loading preview…</span>
+          </div>
+          <div id="vb-frame-fallback" class="vb-fallback hidden">
+            <p id="vb-fallback-msg">This site can’t be shown inside the window.</p>
+            <div class="vb-fallback-actions">
+              <button id="vb-fallback-open" class="primary">Open in a real tab (no history)</button>
+              <button id="vb-fallback-focus" class="hidden">Focus its tab</button>
+            </div>
+          </div>
+        </div>
+        <div id="vb-hint" class="vb-hint">
+          This is your own browser window. Type any URL in the bar above and press Enter — it opens here, in the preview. TabVault strips the
+          framing headers that used to block embedding, so sites like Gmail, GitHub and YouTube load inline. Nothing opens a tab on its own:
+          if a site still can’t be previewed, you get a button to open it in a real history-free tab.
+        </div>
+      </section>
+    </div>
+    <script type="module" src="vault-browser.js"></script>
+  </body>
+</html>

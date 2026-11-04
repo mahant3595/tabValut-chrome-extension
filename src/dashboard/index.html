@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-theme="dark-neon">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TabVault Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="wallpaper-overlay" aria-hidden="true"></div>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-name">TabVault</span>
+        </div>
+        <nav id="nav">
+          <button data-route="home" class="active">Dashboard</button>
+          <button data-route="collections">Collections</button>
+          <button data-route="bookmarks">Bookmarks</button>
+          <button data-route="groups">Tab Groups</button>
+          <button data-route="duplicates">Duplicates</button>
+          <button data-route="vault">Vault Browser</button>
+          <button data-route="save-tabs">Save many tabs</button>
+          <button data-route="backup">Folder backup</button>
+          <button data-route="appearance">Appearance Studio</button>
+        </nav>
+        <div class="sidebar-foot">
+          <div id="sidebar-stats" class="muted">Local-first · nothing leaves this device</div>
+        </div>
+      </aside>
+      <main id="main" class="main" tabindex="-1"></main>
+    </div>
+    <div id="modal-root"></div>
+    <div id="toast-root" aria-live="polite"></div>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

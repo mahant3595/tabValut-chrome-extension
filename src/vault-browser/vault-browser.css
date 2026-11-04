@@ -1,0 +1,381 @@
+/* TabVault — Vault Browser window (standalone extension page).
+   Honors the shared theme contract from src/lib/themes.js via [data-theme]
+   blocks (applied at boot by vault-browser.js). Colors are full values here
+   because this window styles surfaces directly. */
+:root,
+:root[data-theme='dark-neon'] {
+  --bg: #0b0e16;
+  --surface: #121728;
+  --surface-2: #1a2136;
+  --border: #2a3352;
+  --text: #e7ecff;
+  --muted: #93a0c4;
+  --accent: #22d3ee;
+  --accent-contrast: #04121a;
+  --danger: #fb7185;
+}
+:root[data-theme='high-contrast'] {
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --surface-2: #161616;
+  --border: #ffffff;
+  --text: #ffffff;
+  --muted: #f0f0f0;
+  --accent: #ffd400;
+  --accent-contrast: #000000;
+  --danger: #ff9090;
+}
+:root[data-theme='glass'] {
+  --bg: #0b1220;
+  --surface: rgb(255 255 255 / 0.08);
+  --surface-2: rgb(255 255 255 / 0.14);
+  --border: rgb(255 255 255 / 0.35);
+  --text: #f2f7ff;
+  --muted: #c3d2e8;
+  --accent: #7dd3fc;
+  --accent-contrast: #062031;
+  --danger: #fda4af;
+}
+:root[data-theme='minimal-light'] {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #f0f2f6;
+  --border: rgb(20 26 40 / 0.14);
+  --text: #141a28;
+  --muted: #4b5568;
+  --accent: #2563eb;
+  --accent-contrast: #ffffff;
+  --danger: #b42318;
+}
+:root[data-theme='minimal-dark'] {
+  --bg: #14161a;
+  --surface: #1b1e24;
+  --surface-2: #23272f;
+  --border: rgb(255 255 255 / 0.12);
+  --text: #e8eaee;
+  --muted: #9aa3b2;
+  --accent: #60a5fa;
+  --accent-contrast: #071018;
+  --danger: #f87171;
+}
+:root[data-theme='wallpaper'] {
+  --bg: #10131c;
+  --surface: rgb(18 22 34 / 0.85);
+  --surface-2: rgb(28 34 52 / 0.85);
+  --border: rgb(255 255 255 / 0.22);
+  --text: #eef2ff;
+  --muted: #aeb9d6;
+  --accent: #a78bfa;
+  --accent-contrast: #0d0a24;
+  --danger: #fb7185;
+}
+:root[data-theme='iphone'] {
+  /* iOS liquid glass: SF greys, systemBlue accent, frosted white surfaces. */
+  --bg: #f2f2f7;
+  --surface: rgb(255 255 255 / 0.72);
+  --surface-2: rgb(255 255 255 / 0.9);
+  --border: rgb(60 60 67 / 0.22);
+  --text: #000000;
+  --muted: #6c6c70;
+  --accent: #007aff;
+  --accent-contrast: #ffffff;
+  --danger: #ff3b30;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  font: 13px/1.45 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+button {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+button:hover {
+  border-color: var(--accent);
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+button.primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: transparent;
+  font-weight: 600;
+}
+button.small {
+  padding: 3px 8px;
+  font-size: 12px;
+}
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+input {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 9px;
+  min-width: 0;
+}
+.muted {
+  color: var(--muted);
+}
+.hidden {
+  display: none !important;
+}
+
+.vb-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.vb-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+.vb-mark {
+  width: 13px;
+  height: 13px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--accent), #a855f7);
+}
+.vb-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+.vb-badge {
+  font-size: 11px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.vb-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: 0;
+}
+.vb-side {
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--surface);
+}
+.vb-side-head {
+  display: flex;
+  gap: 6px;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.vb-side-head input {
+  flex: 1;
+}
+.vb-scroll {
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vb-group-head {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 4px 6px;
+}
+.vb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vb-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--surface-2);
+}
+.vb-item:hover,
+.vb-item.selected {
+  border-color: var(--border);
+}
+.vb-item.selected {
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.vb-item img.favicon,
+.vb-item span.favicon {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  flex: 0 0 auto;
+  background: rgba(127, 127, 127, 0.15);
+}
+.vb-item .grow {
+  flex: 1;
+  min-width: 0;
+}
+.vb-item .title {
+  font-weight: 600;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vb-item .sub {
+  color: var(--muted);
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vb-state {
+  font-size: 10px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0 6px;
+  flex: 0 0 auto;
+}
+.vb-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.vb-toolbar {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.vb-toolbar input {
+  flex: 1;
+  color: var(--muted);
+}
+/* Address bar: back/forward/reload + editable URL + Go. */
+.vb-addr input#vb-url {
+  color: var(--text);
+}
+button.icon {
+  min-width: 30px;
+  padding: 3px 6px;
+  font-size: 15px;
+  line-height: 1;
+}
+.vb-fallback-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.vb-frame-wrap {
+  flex: 1;
+  position: relative;
+  background: #fff;
+}
+#vb-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.vb-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.06);
+  color: var(--muted);
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 2;
+}
+.vb-loading.hidden {
+  display: none;
+}
+.vb-spinner {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 3px solid rgba(127, 139, 157, 0.25);
+  border-top-color: var(--tv-accent, #22d3ee);
+  animation: vb-spin 0.8s linear infinite;
+}
+@keyframes vb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vb-spinner {
+    animation-duration: 2s;
+  }
+}
+.vb-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text);
+  text-align: center;
+  padding: 24px;
+}
+.vb-hint {
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.vb-empty {
+  color: var(--muted);
+  padding: 24px;
+  text-align: center;
+}
+@media (max-width: 720px) {
+  .vb-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 200px 1fr;
+  }
+}

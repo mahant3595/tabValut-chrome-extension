@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" data-theme="dark-neon">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Collection</title>
+    <link rel="stylesheet" href="../dashboard/styles.css" />
+    <style>
+      body {
+        padding: 16px 18px 28px;
+      }
+      .cw-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .cw-head h1 {
+        font-size: 17px;
+        margin: 0;
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .cw-toolbar {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+      .cw-toolbar input[type='search'] {
+        flex: 1;
+        min-width: 160px;
+      }
+      .cw-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        max-height: 66vh;
+        overflow: auto;
+      }
+      .cw-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 7px 9px;
+        border: 1px solid rgb(var(--border));
+        border-radius: 8px;
+        background: rgb(var(--surface-2) / calc(var(--glass-opacity, 1) * 0.6));
+      }
+      .cw-row .grow {
+        flex: 1;
+        min-width: 0;
+      }
+      .cw-row .title {
+        font-weight: 600;
+        font-size: 13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .cw-row .sub {
+        color: var(--muted);
+        font-size: 11px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cw-head">
+      <h1 id="cw-title">Collection</h1>
+      <span id="cw-count" class="muted"></span>
+    </div>
+    <div class="cw-toolbar">
+      <input id="cw-search" type="search" placeholder="Filter tabs…" />
+      <button id="cw-all" class="small">Select all</button>
+      <button id="cw-none" class="small">Select none</button>
+      <button id="cw-save" class="primary">Save to…</button>
+      <button id="cw-send">Send to…</button>
+      <button id="cw-open">Open (no history)</button>
+      <button id="cw-vault">Open in Vault window</button>
+    </div>
+    <div id="cw-list" class="cw-list"></div>
+    <div id="modal-root"></div>
+    <div id="toast-root"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
